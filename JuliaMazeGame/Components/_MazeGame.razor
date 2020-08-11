@@ -1,0 +1,11 @@
+﻿@inject IMazeRenderer MazeRenderer
+<div class="text-center">
+    <BECanvas Width="@MazeRenderer.CanvasWidth" Height="@MazeRenderer.CanvasHeight" @ref="@MazeRenderer.CanvasRef"></BECanvas>
+</div>
+@code
+{
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await MazeRenderer.RenderMazeAsync();
+    }
+}

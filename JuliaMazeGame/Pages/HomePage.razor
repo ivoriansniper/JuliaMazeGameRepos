@@ -1,0 +1,25 @@
+﻿@page "/"
+@inject IUserInputHandler UserInputHandler
+<_MazeGame/>
+<BSRow Class="text-center">
+    <BSCol>
+        <BSButton Class="button" @onclick="@UserInputHandler.StartGameButtonPress">Start New Game</BSButton>
+    </BSCol>
+</BSRow>
+
+@code
+{
+    [Inject]
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local Set by DI
+    IJSRuntime Runtime { get; set; }
+
+    protected override void OnInitialized()
+    {
+        UserInputHandler.StartGameButtonPress();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await Runtime.InvokeVoidAsync("AddOnKeyDownEvent", DotNetObjectReference.Create(UserInputHandler));
+    }
+}
